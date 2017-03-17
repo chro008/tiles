@@ -10,6 +10,7 @@ import java.net.URLDecoder;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,14 +19,13 @@ import org.apache.tiles.access.TilesAccess;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.servlet.ServletRequest;
-import org.apache.tiles.web.util.TilesDispatchServlet;
 
 import com.shangzhu.tiles.datatype.ActionHandler;
 import com.shangzhu.tiles.datatype.ActionHandlerIdentifier;
 import com.shangzhu.tiles.datatype.ModelView;
 import com.shangzhu.tiles.datatype.ServletActionContext;
 
-public class ReportDataAction extends TilesDispatchServlet {
+public class ReportDataAction extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -118,6 +118,10 @@ public class ReportDataAction extends TilesDispatchServlet {
 			return null;
 		}
 		return temp.get(actionoperate);
+	}
+	
+	protected void doPost(HttpServletRequest req,HttpServletResponse res){
+		doGet(req, res);
 	}
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) {

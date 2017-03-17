@@ -138,15 +138,12 @@ public class MyTilesRequestProcessor extends TilesRequestProcessor {
 	}
 	
 	private ComponentDefinition getWildCardsDenifition(String definitionName,HttpServletRequest request) throws DefinitionsFactoryException{
-		ComponentDefinition definition;
-		
+		ComponentDefinition tempDefinition;
 		if(definitionName.matches("^[a-z]+[_|/|\\.][a-z]+$")){
 			String[] wildCards = definitionName.split("[_|/|\\.]");
 			
 			ComponentDefinition wildCardsDenifition = definitionsFactory.getDefinition("*/*", request, getServletContext());
-			definition = new ComponentDefinition(wildCardsDenifition);
-			
-			definition.setName(wildCards[0]+"/"+wildCards[1]);
+			tempDefinition = new ComponentDefinition(wildCardsDenifition);
 			
 			Map<String,Object> attributes = wildCardsDenifition.getAttributes();
 			String value;
@@ -155,11 +152,12 @@ public class MyTilesRequestProcessor extends TilesRequestProcessor {
 				if(value.matches(".*\\{[1-2]\\}.*")){
 					value = value.replaceAll("\\{1\\}", wildCards[0]).replaceAll("\\{2\\}", wildCards[1]);
 					
-					definition.putAttribute(entry.getKey(), value);
+					tempDefinition.putAttribute(entry.getKey(), value);
 					
 				}
 			}
-			return definition;
+			tempDefinition.setName(wildCards[0]+"/"+wildCards[1]);
+			return tempDefinition;
 		}else{
 			return null;
 		}

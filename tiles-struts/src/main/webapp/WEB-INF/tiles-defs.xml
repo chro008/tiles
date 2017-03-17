@@ -19,7 +19,7 @@
     </definition>
     
     <definition name="*/*" extends="base">
-        <put name="body" value="/WEB-INF/views/{1}/{1}.{2}.jsp" type="template"/>
+        <put name="body" value="/WEB-INF/views/{1}.{2}.jsp" type="template"/>
     </definition>
     
 </tiles-definitions>

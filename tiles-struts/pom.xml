@@ -24,7 +24,7 @@
 
 		<dependency>
 			<groupId>org.apache.struts</groupId>
-			<artifactId>struts-extras</artifactId>
+			<artifactId>struts-extras</artifactId> 
 			<version>1.3.10</version>
 		</dependency>
 		

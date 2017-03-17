@@ -8,7 +8,7 @@ import com.shangzhu.tiles.datatype.ServletActionContext;
 public class MyAPPHomepageAction {
 	
 	public ModelView homepage(ServletActionContext context){
-		return new ModelView("traffic.homepage").addModel("name", "myapp");
+		return new ModelView("myapp.homepage").addModel("name", "myapp");
 	}
 
 }

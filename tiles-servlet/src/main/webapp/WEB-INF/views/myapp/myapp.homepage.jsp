@@ -1,1 +1,1 @@
-<div><%=request.getParameter("name") %></div>
+<div><%=request.getAttribute("name") %></div>

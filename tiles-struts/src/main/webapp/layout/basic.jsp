@@ -33,7 +33,7 @@ div {
 			<tiles:insert name="footer" />
 		</div>
 	</body>
-<script type="text/javascript">
+	<script type="text/javascript">
 	document.writeln("words wrote by script.jsp");
 </script>
 </html>

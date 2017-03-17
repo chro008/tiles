@@ -13,12 +13,8 @@ public class ModelView {
 	}
 	
 	public ModelView(String path,boolean isdirect){
-		if(path.contains(".")){
-			this.path = "/WEB-INF/views/"+path.split("\\.")[0]+"/"+path+".jsp";
-		}else{
-			this.path = "/WEB-INF/views/"+path+".jsp";
-			this.isdirect = isdirect;
-		}
+		this.path = path;
+		this.isdirect = isdirect;
 	}
 	
 	public static ModelView getForwardView(String path){

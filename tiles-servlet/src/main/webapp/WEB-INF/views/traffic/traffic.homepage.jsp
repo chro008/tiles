@@ -11,6 +11,7 @@ $("#button").click(function(){
 	$.ajax({  
 			type:"post",
 			url : "traffic.do?action=homepage&operate=getHtml",
+			contentType:"application/x-www-form-urlencoded;charset=utf-8",   
 			dataType : "html",			
 			data:{},
 			async: true,  
