@@ -1,1 +1,1 @@
-<div>banner</div>
+<h1>classic_credits</h1>

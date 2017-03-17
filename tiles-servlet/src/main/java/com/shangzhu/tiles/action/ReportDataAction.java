@@ -20,9 +20,11 @@ import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.Request;
 import org.apache.tiles.request.servlet.ServletRequest;
 
+import com.shangzhu.tiles.custom.MyCompleteAutoloadTilesInitializer;
 import com.shangzhu.tiles.datatype.ActionHandler;
 import com.shangzhu.tiles.datatype.ActionHandlerIdentifier;
 import com.shangzhu.tiles.datatype.ModelView;
+import com.shangzhu.tiles.datatype.ModelViewType;
 import com.shangzhu.tiles.datatype.ServletActionContext;
 
 public class ReportDataAction extends HttpServlet {
@@ -121,26 +123,45 @@ public class ReportDataAction extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest req,HttpServletResponse res){
-		doGet(req, res);
+		process(req, res);
 	}
 	
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) {
-
-        ApplicationContext applicationContext = org.apache.tiles.request.servlet.ServletUtil
-                .getApplicationContext(getServletContext());
-        Request request = new ServletRequest(applicationContext,
-                req, res);
-        TilesContainer container = TilesAccess.getContainer(applicationContext,
-                null);
-        String definition = getDefinitionName(req,res);
-        if(definition==null || definition.length()==0){
+	protected void doGet(HttpServletRequest req,HttpServletResponse res){
+		process(req,res);
+	}
+	
+	protected void process(HttpServletRequest req, HttpServletResponse res) {
+        ModelView view = getModelView(req, res);
+        if(view==null){
         	return;
         }else{
-        	container.render(definition, request);
+        	String definition = view.getPath();
+        	ApplicationContext applicationContext = org.apache.tiles.request.servlet.ServletUtil
+                    .getApplicationContext(getServletContext());
+            Request request = new ServletRequest(applicationContext,req, res);
+        	if(view.getType()==ModelViewType.JSP){
+        		renderJsp(definition,applicationContext,request);
+        	}else if(view.getType()==ModelViewType.PDF){
+        		renderPdf(definition,applicationContext,request);
+        	}
         }
     }
 	
-	protected String getDefinitionName(HttpServletRequest request,HttpServletResponse response) {
+	private void renderJsp(String definition,ApplicationContext applicationContext,Request request){
+        TilesContainer container = TilesAccess.getContainer(applicationContext,
+                MyCompleteAutoloadTilesInitializer.JSP_CONTAINER);
+        TilesAccess.setCurrentContainer(request, MyCompleteAutoloadTilesInitializer.JSP_CONTAINER);
+        container.render(definition, request);
+	}
+	
+	private void renderPdf(String definition,ApplicationContext applicationContext,Request request){
+        TilesContainer container = TilesAccess.getContainer(applicationContext,
+                MyCompleteAutoloadTilesInitializer.PDF_CONTAINER);
+        TilesAccess.setCurrentContainer(request, MyCompleteAutoloadTilesInitializer.PDF_CONTAINER);
+        container.render(definition, request);
+	}
+	
+	protected ModelView getModelView(HttpServletRequest request,HttpServletResponse response) {
 		try {
 			ServletActionContext context = ServletActionContext.getInst(request,response);
 			String uri = request.getRequestURI();
@@ -170,7 +191,12 @@ public class ReportDataAction extends HttpServlet {
 								request.setAttribute(key, tempMap.get(key));
 							}
 						}
-						return view.getPath();
+						
+						if(view.getType()==null){
+							view.setType(ModelViewType.JSP);
+						}
+						
+						return view;
 					}else{
 						return null;
 					}
@@ -182,7 +208,7 @@ public class ReportDataAction extends HttpServlet {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		return "error";
+		return null;
     }
 
 }

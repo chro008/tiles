@@ -4,7 +4,7 @@
 	<display-name>tiles2</display-name>
 	
 	<listener>
-		<listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
+		<listener-class>com.shangzhu.tiles.custom.MyCompleteAutoloadTilesListener</listener-class>
 	</listener>
 	
 	<filter>

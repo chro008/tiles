@@ -4,7 +4,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
   <definition name="basic" template="/layouts/classic.jsp">
-    <put-attribute name="title" value="Tiles tutorial basic" />
+    <put-attribute name="title" value="basic" />
     <put-attribute name="header" value="/tiles/banner.jsp" />
     <put-attribute name="menu" value="/tiles/common_menu.jsp" />
     <put-attribute name="body" value="/tiles/home_body.jsp" />

@@ -5,16 +5,20 @@ import java.util.Map;
 
 public class ModelView {
 	private String path;
-	private boolean isdirect = false;
 	private Map<String,Object> modelMap = null;
+	private ModelViewType type;
 	
 	public ModelView(String path){
 		this(path,false);
 	}
 	
+	public ModelView(String path,ModelViewType type){
+		this(path,false);
+		setType(type);
+	}
+	
 	public ModelView(String path,boolean isdirect){
 		this.path = path;
-		this.isdirect = isdirect;
 	}
 	
 	public static ModelView getForwardView(String path){
@@ -33,10 +37,6 @@ public class ModelView {
 		this.path = path;
 	}
 	
-	public boolean isDirectView(){
-		return isdirect;
-	}
-	
 	public ModelView addModel(String name,Object model,Object... objects){
 		if(modelMap==null){modelMap = new HashMap<String, Object>();}
 		modelMap.put(name, model);
@@ -52,6 +52,14 @@ public class ModelView {
 
 	public void setModelMap(Map<String, Object> modelMap) {
 		this.modelMap = modelMap;
+	}
+
+	public ModelViewType getType() {
+		return type;
+	}
+
+	public void setType(ModelViewType type) {
+		this.type = type;
 	}
 	
 }

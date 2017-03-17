@@ -1,1 +1,1 @@
-<div>menu</div>
+<h1>classic_menu</h1>
